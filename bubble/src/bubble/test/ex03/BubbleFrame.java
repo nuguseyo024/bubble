@@ -1,4 +1,4 @@
-package bubble.test.ex02;
+package bubble.test.ex03;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
