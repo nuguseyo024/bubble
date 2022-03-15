@@ -46,14 +46,17 @@ public class Player extends JLabel implements Moveable {
 
 	@Override
 	public void left() {
-		// TODO Auto-generated method stub
+		setIcon(playerL);
+		x = x - 10;
+		setLocation(x,y);
 
 	}
 
 	@Override
 	public void right() {
-		// TODO Auto-generated method stub
-
+		setIcon(playerR);
+		x = x + 10;
+		setLocation(x,y);
 	}
 
 	@Override
