@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Bubble extends JLabel {
+public class Bubble extends JLabel implements Moveable{
 
 	// 의존성 컴포지션 
 	private Player player; // 플레이어의 정보는 생성자로 받아와야 돼요 컴포지션을 할때는 
@@ -34,6 +34,7 @@ public class Bubble extends JLabel {
 		
 		initObject();
 		initSetting();
+		initThread();
 
 	}
 
@@ -56,6 +57,63 @@ public class Bubble extends JLabel {
 		setSize(50,50);
 		
 		state = 0;
+	}
+
+	
+	private void initThread() {
+		new Thread(()->{
+			if(player.getPlayerWay()==PlayerWay.LEFT) {
+				left();
+			} else {
+				right();
+			}			
+		}).start();
+	}
+	@Override
+	public void left() {
+		left = true;
+		for(int i = 0; i <400; i++) {
+			x--;
+			setLocation(x,y);
+			
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		up();
+	}
+
+	@Override
+	public void right() {
+		right = true;
+		for(int i = 0; i <400; i++) {
+			x++;
+			setLocation(x,y);
+			
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		up();
+	}
+
+	@Override
+	public void up() {
+		up = true;
+		while(up) {
+			y--;
+			setLocation(x,y);
+			
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
