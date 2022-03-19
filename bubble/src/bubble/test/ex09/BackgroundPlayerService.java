@@ -31,7 +31,7 @@ public class BackgroundPlayerService implements Runnable {
 			
 			// -2 가 나온다는 것은 바닥이 흰색 
 			int bottomColor = image.getRGB(player.getX()+10, player.getY()+50+5) +
-					image.getRGB(player.getX()+40, player.getY()+50+5);
+					image.getRGB(player.getX()+50-10, player.getY()+50+5);
 			//System.out.println("바텀 컬러 : "+bottomColor);
 			
 			// 바닥 충돌 확인 
@@ -43,8 +43,7 @@ public class BackgroundPlayerService implements Runnable {
 					player.down();
 				}
 				
-			}
-			
+			}		
 			// 외벽 충돌 확인 
 			if(leftColor.getRed()==255 && leftColor.getGreen()==0 && leftColor.getBlue()==0) {
 				//System.out.println("왼쪽 벽에 충돌함 ");
@@ -58,9 +57,8 @@ public class BackgroundPlayerService implements Runnable {
 				player.setLeftWallCrash(false);
 				player.setRightWallCrash(false);
 			}
-			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {			
 				e.printStackTrace();
 			}

@@ -46,7 +46,7 @@ public class Player extends JLabel implements Moveable {
 	}
 
 	private void initSetting() {
-		x = 80;
+		x = 70;
 		y = 535;
 
 		left = false;
