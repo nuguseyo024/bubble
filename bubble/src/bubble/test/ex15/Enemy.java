@@ -1,4 +1,4 @@
-package bubble.test.ex14;
+package bubble.test.ex15;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,7 +9,7 @@ import lombok.Setter;
 // class player :: new 가능한 애들! 게임에 존재할 수 있음. (추상 메서드를 가질 수 없다) 
 @Getter
 @Setter
-public class Player extends JLabel implements Moveable {
+public class Enemy extends JLabel implements Moveable {
 
 	private BubbleFrame mContext;
 	
@@ -17,87 +17,65 @@ public class Player extends JLabel implements Moveable {
 	private int x;
 	private int y;
 
-	// 플레이어의 방향 
-	private PlayerWay playerWay;
+	// 적군의 방향 
+	private EnemyWay enemyWay;
 	
 	// 움직임 상태 
 	private boolean left;
 	private boolean right;
 	private boolean up;
 	private boolean down;
-	
-	// 벽에 충돌한 상태
-	private boolean leftWallCrash;
-	private boolean rightWallCrash;
-	
-	// 플레이어 속도 상태 
-	// 스피드는 고정값이라 상수로 입력, 상수는 대문자로. 
-	private final int SPEED = 4;
-	private final int JUMPSPEED = 2; // up, down 의 스피드 
-	
-	private ImageIcon playerR, playerL;
 
-	public Player(BubbleFrame mContext) {
+	// 적군 속도 상태 
+	private final int SPEED = 3;
+	private final int JUMPSPEED = 1; // up, down 의 스피드 
+	
+	private ImageIcon enemyR, enemyL;
+
+	public Enemy(BubbleFrame mContext) {
 		this.mContext = mContext;
 		initObject();
 		initSetting();
-		initBackgroundPlayerService();
+		initBackgroundEnemyService();
 	}
 
 
 	private void initObject() {
-		playerR = new ImageIcon("image/playerR.png");
-		playerL = new ImageIcon("image/playerL.png");
+		enemyR = new ImageIcon("image/enemyR.png");
+		enemyL = new ImageIcon("image/enemyL.png");
 
 	}
 
 	private void initSetting() {
-		x = 70;
-		y = 535;
+		x = 480;
+		y = 178;
 
 		left = false;
 		right = false;
 		up = false;
 		down = false;
+			
+		enemyWay = EnemyWay.RIGHT;
 		
-		leftWallCrash = false;
-		rightWallCrash = false;
-		
-		playerWay = playerWay.RIGHT;
-		
-		setIcon(playerR);
+		setIcon(enemyR);
 		setSize(50, 50);
 		setLocation(x, y);
 	}
 
 
-	private void initBackgroundPlayerService() {
-		// BackgroundPlayerService 클래스 자체가 runnable 타입 (Runnable 을 상속받았기 때문에  
-		new Thread(new BackgroundPlayerService(this)).start();
+	private void initBackgroundEnemyService() { 
+		//new Thread(new BackgroundEnemyService(this)).start();
 	
 	}
-	@Override
-	public void attack() {
-		new Thread(()->{
-			Bubble bubble = new Bubble(mContext);
-			mContext.add(bubble);
-			if(playerWay == PlayerWay.LEFT) {
-				bubble.left();
-			}else {
-				bubble.right();
-			}
-		}).start();
-	}
-	
+
 	
 	@Override
 	public void left() {
-		playerWay = playerWay.LEFT;
-		
+		enemyWay = EnemyWay.LEFT;		
 		left = true;
 		new Thread(()-> {
 			while(left) {
-				setIcon(playerL);
+				setIcon(enemyL);
 				x = x - SPEED;
 				setLocation(x,y);
 				try {
@@ -112,12 +90,12 @@ public class Player extends JLabel implements Moveable {
          
 	@Override
 	public void right() {
-		playerWay = playerWay.RIGHT;
+		enemyWay = EnemyWay.RIGHT;
 		
 		right = true;
 		new Thread(()-> {
 			while(right) {
-				setIcon(playerR);
+				setIcon(enemyR);
 				x = x + SPEED;
 				setLocation(x,y);
 				try {
@@ -130,7 +108,7 @@ public class Player extends JLabel implements Moveable {
 
 	}
 	
-	// left + up, rigth + up
+	// left + up, right + up
 	@Override
 	public void up() {
 		//System.out.println("up");
@@ -144,8 +122,7 @@ public class Player extends JLabel implements Moveable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-			
+			}			
 			up = false;
 			down();
 			
@@ -153,9 +130,8 @@ public class Player extends JLabel implements Moveable {
 	}
 
 	@Override
-	public void down() {
-		
-		System.out.println("down");
+	public void down() {	
+		//System.out.println("down");
 		down = true;
 		new Thread(()->{
 			while(down) {

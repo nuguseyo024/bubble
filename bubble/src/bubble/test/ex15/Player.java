@@ -1,4 +1,4 @@
-package bubble.test.ex14;
+package bubble.test.ex15;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -92,7 +92,7 @@ public class Player extends JLabel implements Moveable {
 	
 	@Override
 	public void left() {
-		playerWay = playerWay.LEFT;
+		playerWay = PlayerWay.LEFT;
 		
 		left = true;
 		new Thread(()-> {
@@ -112,7 +112,7 @@ public class Player extends JLabel implements Moveable {
          
 	@Override
 	public void right() {
-		playerWay = playerWay.RIGHT;
+		playerWay = PlayerWay.RIGHT;
 		
 		right = true;
 		new Thread(()-> {
