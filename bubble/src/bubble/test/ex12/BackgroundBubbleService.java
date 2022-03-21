@@ -38,8 +38,10 @@ public class BackgroundBubbleService{
 		return false;
 	}
 	public boolean topWall() {
-		
-		
+		Color topColor = new Color(image.getRGB(bubble.getX()+25,bubble.getY()-10));
+		if(topColor.getRed()==255 && topColor.getGreen()==0 && topColor.getBlue()==0) {
+			return true;
+		}
 		return false;
 	}
 	
