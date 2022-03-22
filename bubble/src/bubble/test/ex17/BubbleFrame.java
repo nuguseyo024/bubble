@@ -25,7 +25,7 @@ public class BubbleFrame extends JFrame {
 		initListener();
 		setVisible(true);
 	}
-
+ 
 	private void initObject() {
 		backgroundMap = new JLabel(new ImageIcon("image/backgroundMap.png"));
 		setContentPane(backgroundMap);
